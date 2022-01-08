@@ -27,9 +27,6 @@ const style = {
         display: "flex",
         alignItem: "center"
     },
-    pHower : {
-
-    }
 };
 
 export const Buttons = () => {
