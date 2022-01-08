@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Calendar, DatePicker, Badge } from 'antd';
 import { Button, Input } from "@material-ui/core";
 import { connect, useDispatch, useSelector} from 'react-redux';
-import { addTaskAction, delTaskAction } from "../../../store/action/tasks-actions";
+import { addTaskAction, deleteTaskAction } from "../../../store/action/tasks-actions";
 import rootReducer from "../../../store/reducers/root-reduce";
 import { TasksList } from "./TasksList";
 
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addTask: (task) => dispatch(addTaskAction(task)),
-  dellTask: (task) => dispatch(delTaskAction(task)),
+  dellTask: (task) => dispatch(deleteTaskAction(task)),
 });
 
 export default connect(

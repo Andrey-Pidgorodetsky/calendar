@@ -5,7 +5,7 @@ export const addTaskAction = (task) => {
     };
 };
 
-export const delTaskAction = (id) => {
+export const deleteTaskAction= (id) => {
     return {
         type: "DELL_TASK",
         payload: id
