@@ -1,6 +1,6 @@
 import react, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-
+import "./buttonsStyle.css"
 
 const style = {
     div : {
@@ -19,49 +19,51 @@ const style = {
         background : "#1c212d",
         borderRadius : "10px", 
         border : "#1c212d",
-        cursor: "pointer", 
+        cursor: "pointer",
+        textAlign: "left",
+    },
 
+    p: {
+        display: "flex",
+        alignItem: "center"
     },
 };
 
 export const Buttons = () => {
     const history = useHistory("/");
 
-    const navigateToDashboard = () => { history.push("dashboard") };
-    const navigateToInbox = () => { history.push("inbox") };
-    const navigateToCalendar = () => { history.push("calendar") };
+    const navigateToDashboard = () => { history.push("/dashboard") };
+    const navigateToInbox = () => { history.push("/inbox") };
+    const navigateToCalendar = () => { history.push("/calendar") };
+    const navigateToUsers = () => { history.push("/users") };
     
-    const onMouseTarget = () => {   
-        style.button.background = "red"
-    };
-
-    const onMouseUnTarget = () => {       
-        style.button.background = "#1c212d"
-    };   
 
     return(
         <div style={style.div}> 
-        
-            <p>
+            <p className="menu-item"> 
+                <img  src="https://img.icons8.com/color/24/000000/dashboard-layout.png"/>
                 <button style={style.button}
-                    onClick={navigateToDashboard} 
-                    onMouseEnter={event => onMouseTarget(event)} 
-                    onMouseOut={event => onMouseUnTarget(event)}> 
-                    <img  textAlign="center" 
-                    src="https://img.icons8.com/color/24/000000/dashboard-layout.png"
-                    /> Dashboard
+                    onClick={navigateToDashboard}> 
+                     Dashboard
                 </button>
             </p>
 
-            {/* <p>
+            <p className="menu-item">
+                <img src="https://img.icons8.com/fluency/24/000000/reddit-inbox.png"/>  
                 <button style={style.button}
-                    onClick={navigateToInbox} > <img src="https://img.icons8.com/fluency/24/000000/reddit-inbox.png"/> Inbox</button>
+                    onClick={navigateToInbox} > Inbox</button>
             </p>
 
-            <p>
+            <p className="menu-item">
+                <img src="https://img.icons8.com/fluency/24/000000/windows-calendar.png"/>
                 <button style={style.button}
-                    onClick={navigateToCalendar} > <img src="https://img.icons8.com/fluency/24/000000/windows-calendar.png"/> Calendar & Todos</button>
-            </p> */}
+                    onClick={navigateToCalendar} > Calendar & Todos</button>
+            </p>
+            <p className="menu-item">
+            <img src="https://img.icons8.com/color/24/000000/group.png"/>
+                <button style={style.button}
+                    onClick={navigateToUsers} > Users </button>
+            </p>
 
 
         </div>)
