@@ -1,30 +1,42 @@
 import React, {useEffect, useState} from "react";
 import { Calendar, DatePicker, Badge } from 'antd';
 import { Button, Input } from "@material-ui/core";
-import { connect, useDispatch, useSelector} from 'react-redux';
+import { connect } from 'react-redux';
 import { addTaskAction, deleteTaskAction } from "../../../store/action/tasks-actions";
-import rootReducer from "../../../store/reducers/root-reduce";
 import { TasksList } from "./TasksList";
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import { Dashboard } from "../Dashboard/Dashboard";
+moment.locale('zh-cn');
 
-
-export function getListData(value) {
-    let listData;
-    switch (value.date()) {
-      case 2:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' },
-        ];
-        break;
-
-    }
-    return listData || [];
+export function getListData(tasks) {
+  if (!tasks) {
+    return [];
+  };
+    return tasks.map(({name, type}) => {
+      return {
+        type: type,
+        content: name
+      }
+    })
 };
 
+function addZero (numb) {
+  return String(numb).length === 1 ? `0${numb}`: numb
+}
 
+function dateCellRender(value, tasks) {
+  const day = addZero(value.get('date'));
+  const month = addZero(value.get('month') +1);
+  const year = value.get('year');
+  const data= `${year}-${month}-${day}`
 
-function dateCellRender(value) {
-  const listData = getListData(value);
+  const tasksFilter = tasks.filter((task) => {
+    return data === task.date
+  });
+
+  const listData = getListData(tasksFilter)
+
   return (
     <ul className="events">
       {listData.map(item => (
@@ -34,26 +46,12 @@ function dateCellRender(value) {
       ))}
     </ul>
   );
-};
-
-function getMonthData(value) {
-    return 
-  
-};
-  
-function monthCellRender(value) {
-  const num = getMonthData(value);
-  return num ? (
-    <div className="notes-month">
-      <section>{num}</section>
-      <span>Backlog number</span>
-    </div>
-  ) : null;
-};
+}
 
 export const CalendarTodos = (props) => {
   const [taskName, setTaskName] = useState("");
   const [date, setDate] = useState("");
+  const [typeTask, setTypeTask] = useState("");
   const handleTaskNameChange = (event) => {
     setTaskName(event.target.value)
   };
@@ -62,29 +60,49 @@ export const CalendarTodos = (props) => {
     setDate(dateString)
   };
 
+  const handlTypeTaskChange = (e) => {
+    setTypeTask(e.target.value)
+  };
+
   const handlAddTask = () => {
-    props.addTask({date: date, name: taskName, id: Date.now()})
+    props.addTask({type: typeTask, date: date, name: taskName, id: Date.now()})
     setTaskName('')
   };
 
-  const handlDeletTask = (props) => {
-    props.dellTask(props.id)
+  const handlDeletTask = (task) => {
+    props.dellTask(task.id)
   };
-
-    return (
+ 
+    return ( 
       <div>
         <Input value={taskName} placeholder="Enter task name" onChange={handleTaskNameChange}/>
         <DatePicker onChange={handleDatePiker}/>
-        <Button style={{background:"#E0FFFF"}} onClick={handlAddTask}>Add task</Button>
-        <TasksList {...props}  /> 
-        <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
-        <p>CalendarTodos</p>
+      
+        <select onChange={handlTypeTaskChange}>
+              <option value="default"></option>
+              <option value="success">success</option>
+              <option value="processing">processing</option>
+              <option value="warning">warning</option>
+              <option value="error">error</option>
+        </select> 
+        <Button style={{
+          background:"#E0FFFF",   
+          width:"10px",
+          height:"25px",
+          fontSize:"60%",
+          border:'solid'
+        }} onClick={handlAddTask}>Add task</Button>
+      
+        <TasksList {...props} handler={handlDeletTask} handDashboardTask/> 
+        <Calendar 
+           dateCellRender={(value) => dateCellRender(value, props.tasks)} 
+        />
       </div>
     );
 };
 
 const mapStateToProps = (state) => ({
-  tasks: state.tasks.tasks
+  tasks: state.taskReducer.tasks,
 
 });
 
@@ -97,3 +115,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CalendarTodos);
+
+

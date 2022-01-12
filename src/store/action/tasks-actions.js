@@ -11,3 +11,10 @@ export const deleteTaskAction= (id) => {
         payload: id
     };
 };
+
+export const getTaskAction= () => {
+    return {
+        type: "GET_TASK"
+    };
+};
+

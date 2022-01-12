@@ -8,7 +8,7 @@ const style = {
     div : {
         background: "#1c212d",        
         width: "250px",
-        height: "100vh", 
+        height: "140vh", 
         padding: "20px",
         alignItems: "center",
         padding : "20px"

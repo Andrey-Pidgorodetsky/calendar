@@ -8,12 +8,15 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         case "ADD_TASK": 
             return {...state, tasks: [...state.tasks, action.payload]}
         case "DELL_TASK": 
-            return {...state, tasks:[...state.tasks.filter(task => task.id !== action.payload)]}        
+            return {...state, tasks:[...state.tasks.filter(task => task.id !== action.payload)]}    
+        case "GET_TASK": 
+            return {...state, tasks: [...state.tasks]}  
         default:
             return {
                 ...state
-            }  
+            }; 
             
     }
-}
+};
+
 export default taskReducer;

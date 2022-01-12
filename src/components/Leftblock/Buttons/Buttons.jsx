@@ -32,9 +32,10 @@ const style = {
 export const Buttons = () => {
     const history = useHistory("/");
 
-    const navigateToDashboard = () => { history.push("dashboard") };
-    const navigateToInbox = () => { history.push("inbox") };
-    const navigateToCalendar = () => { history.push("calendar") };
+    const navigateToDashboard = () => { history.push("/dashboard") };
+    const navigateToInbox = () => { history.push("/inbox") };
+    const navigateToCalendar = () => { history.push("/calendar") };
+    const navigateToUsers = () => { history.push("/users") };
     
 
     return(
@@ -57,6 +58,11 @@ export const Buttons = () => {
                 <img src="https://img.icons8.com/fluency/24/000000/windows-calendar.png"/>
                 <button style={style.button}
                     onClick={navigateToCalendar} > Calendar & Todos</button>
+            </p>
+            <p className="menu-item">
+            <img src="https://img.icons8.com/color/24/000000/group.png"/>
+                <button style={style.button}
+                    onClick={navigateToUsers} > Users </button>
             </p>
 
 

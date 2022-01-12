@@ -1,11 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { Dashboard } from "../Dashboard/Dashboard";
 
 
 export const TasksList = (props) => {
-  console.log(props)
-  
-  const handlDeletTask = (props) => {
-    props.dellTask(props.id)
+  const history = useHistory("/");
+
+  const navigateToDashboard = (taskId) => { 
+    history.push(`/dashboard/${taskId}`);
   };
 
   return (
@@ -15,16 +17,23 @@ export const TasksList = (props) => {
         props.tasks.map(task => 
           <div >{task.name}
             {task.name.length> 0 ? 
+               <div> <button 
+                  onClick={() => navigateToDashboard(task.id)}
+                  style={{backgroundColor:" Transparent", border: "none"}}
+                > &#9998;
+                </button> 
                 <button 
-                  onClick={() => {handlDeletTask(task)}}
+                  onClick={() => {props.handler(task)}}
                   style={{backgroundColor:" Transparent", border: "none"}}
                 > &#10060;
-                </button>
+                </button> 
+                </div>
               : null 
             }                    
           </div>
         ) : 
         <div> {null} </div>
+        
     }
     </div>
   )
