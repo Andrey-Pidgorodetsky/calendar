@@ -8,9 +8,9 @@ const style = {
     div : {
         background: "#1c212d",        
         width: "250px",
-        height: "100vh", 
+        height: "140vh", 
         padding: "20px",
-        alignItems : "center",
+        alignItems: "center",
         padding : "20px"
     }
 };
@@ -19,7 +19,7 @@ const style = {
 export const LeftBlock = () => {
     return (
         <div style={style.div}>   
-            <h1><TimmiButtons/></h1>
+            <TimmiButtons/>
             <Buttons/>
         </div>      
     );
